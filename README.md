@@ -1,5 +1,5 @@
 # PyBinaryStream
-A C#-like binary stream python port.
+A C#-like binary stream python interface.
 
 Can be used to serialize/de-serialize primitive types over any byte stream (e.g. file, network stream, etc.)
 
