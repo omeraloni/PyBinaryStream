@@ -52,7 +52,7 @@ class BinaryReader(BinaryStream):
 	def ReadChars(self, num):
 		return self.stream.read(num).decode('ascii')
 
-	def ReadDouble(self, value):
+	def ReadDouble(self):
 		return struct.unpack(self.endianness + 'd', self.stream.read(8))[0]
 
 	def ReadInt16(self):
@@ -67,7 +67,7 @@ class BinaryReader(BinaryStream):
 	def ReadSByte(self):
 		return struct.unpack(self.endianness + 'b', self.stream.read(1))[0]
 
-	def ReadSingle(self, value):
+	def ReadSingle(self):
 		return struct.unpack(self.endianness + 'f', self.stream.read(4))[0]
 
 	def ReadString(self):
@@ -138,60 +138,3 @@ class BinaryWriter(BinaryStream):
 
 	def Write7BitEncodedInt(self, value):
 		pass
-
-def PrintVal(value):
-	if type(value) == str:
-		print('value: ' + '\"{0}\"'.format(value) + ', type: ' + str(type(value)))
-	else:
-		print('value: ' + '{0}'.format(value) + ', hex: ' + '{0:016X}'.format(value) + ', type: ' + str(type(value)))
-
-def test():
-	myFolder = "/Volumes/Macintosh HD/Users/omeraloni/Desktop/"
-	myFile = myFolder + "file.bin"
-	#f = open(myFile, "wb")
-
-	w = BinaryWriter(open(myFile, "wb"), BinaryStream.Endianness.LITTLE)
-
-	w.WriteUInt64(45345324524524234)
-	"""
-	w.WriteInt32(5678)
-	w.WriteByte(129)
-	w.WriteBool(True)
-	w.WriteBytes(bytearray([0x12, 0x34]))
-	w.WriteChar('a')
-	w.WriteChars('omer')
-	"""
-	w.Flush()
-
-	r = BinaryReader(open(myFile, "rb"))
-
-	val = r.ReadUInt32()
-	PrintVal(val)
-	val = r.ReadUInt32()
-	PrintVal(val)
-	r.Seek(0, os.SEEK_SET)
-	val = r.ReadUInt64()
-	PrintVal(val)
-
-	r = BinaryReader(open(myFile, "rb"), BinaryStream.Endianness.BIG)
-
-	val = r.ReadUInt32()
-	PrintVal(val)
-	"""
-	val = r.ReadInt32()
-	PrintVal(val)
-	val = r.ReadByte()
-	PrintVal(val)
-	val = r.ReadBool()
-	PrintVal(val)
-	
-	val = r.ReadBytes(2)
-	for x in val:
-		PrintVal(x)
-	val = r.ReadChar()
-	PrintVal(val)
-	val = r.ReadChars(4)
-	PrintVal(val)
-	"""
-
-test()
