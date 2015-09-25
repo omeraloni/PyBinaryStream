@@ -3,7 +3,7 @@ A C#-like binary stream python port.
 
 Can be used to serialize/de-serialize primitive types over any byte stream (e.g. file, network stream, etc.)
 
-Unlike the original C# code, this one natively supports big/little endiannes.
+Unlike the original C# code, this one natively supports big/little endian.
 
 # Usage
 TODO
