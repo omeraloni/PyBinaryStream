@@ -10,3 +10,6 @@ TODO
 
 ## WARNING
 Written to practice my python skills, use at your own risk.
+
+- [ ] test
+- [x] rest
