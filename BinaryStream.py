@@ -11,7 +11,7 @@ class BinaryStream(object):
 		LITTLE = 1
 		NATIVE = 2
 
-	def GetEndiannes(endianness):
+	def GetEndiannes(self, endianness):
 		return {
 			BinaryStream.Endianness.BIG: '>',
 			BinaryStream.Endianness.LITTLE: '<',
@@ -30,12 +30,11 @@ class BinaryStream(object):
 	def Seek(self, offset, origin = os.SEEK_SET):
 		self.stream.seek(offset, origin)
 
-
 class BinaryReader(BinaryStream):
 	def __init__(self, stream, endianness=BinaryStream.Endianness.NATIVE):
 		super(BinaryReader, self).__init__(stream)
 		self.stream = stream
-		self.endianness = BinaryStream.GetEndiannes(endianness)
+		self.endianness = BinaryStream.GetEndiannes(self, endianness)
 
 	def ReadByte(self):
 		return struct.unpack(self.endianness + 'B', self.stream.read(1))[0]
@@ -89,7 +88,7 @@ class BinaryWriter(BinaryStream):
 	def __init__(self, stream, endianness=BinaryStream.Endianness.NATIVE):
 		super(BinaryWriter, self).__init__(stream)
 		self.stream =  stream
-		self.endianness = BinaryStream.GetEndiannes(endianness)
+		self.endianness = BinaryStream.GetEndiannes(self, endianness)
 
 	def WriteBool(self, value):
 		self.stream.write(struct.pack(self.endianness + '?', value))
